@@ -1,12 +1,21 @@
-diff -ur libpri-orig/Makefile libpri/Makefile
---- libpri-orig/Makefile	2004-03-30 13:18:12.000000000 -0700
-+++ libpri/Makefile	2004-04-09 13:42:35.359656746 -0600
-@@ -49,7 +49,6 @@
- 	install -m 755 $(DYNAMIC_LIBRARY) $(INSTALL_PREFIX)/usr/lib
- 	( cd $(INSTALL_PREFIX)/usr/lib ; ln -sf libpri.so.1 libpri.so )
- 	install -m 644 $(STATIC_LIBRARY) $(INSTALL_PREFIX)/usr/lib
+diff -burN libpri-1.0.0.orig/Makefile libpri-1.0.0/Makefile
+--- libpri-1.0.0.orig/Makefile	2004-11-15 19:59:06.857292472 +0100
++++ libpri-1.0.0/Makefile	2004-11-15 20:00:18.554392856 +0100
+@@ -62,13 +62,12 @@
+ 	@cvs update -d
+ 
+ install: $(STATIC_LIBRARY) $(DYNAMIC_LIBRARY)
+-	mkdir -p $(INSTALL_PREFIX)/usr/lib
++	mkdir -p $(INSTALL_PREFIX)$(LIBDIR)
+ 	mkdir -p $(INSTALL_PREFIX)/usr/include
+ 	install -m 644 libpri.h $(INSTALL_PREFIX)/usr/include
+-	install -m 755 $(DYNAMIC_LIBRARY) $(INSTALL_PREFIX)/usr/lib
+-	( cd $(INSTALL_PREFIX)/usr/lib ; ln -sf libpri.so.1 libpri.so )
+-	install -m 644 $(STATIC_LIBRARY) $(INSTALL_PREFIX)/usr/lib
 -	/sbin/ldconfig
++	install -m 755 $(DYNAMIC_LIBRARY) $(INSTALL_PREFIX)$(LIBDIR)
++	( cd $(INSTALL_PREFIX)$(LIBDIR) ; ln -sf libpri.so.1 libpri.so )
++	install -m 644 $(STATIC_LIBRARY) $(INSTALL_PREFIX)$(LIBDIR)
  
  uninstall:
  	@echo "Removing Libpri"
-Only in libpri: Makefile~
