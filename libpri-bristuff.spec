@@ -1,25 +1,29 @@
-Summary:	ISDN PRI channel interface library.
+Summary:	ISDN PRI channel interface library
+Summary(pl):	Biblioteka interfejsu do kana³ów PRI ISDN
 Name:		libpri
 Version:	0.1
 %define snap 20040407
 Release:	0.%{snap}.1
 License:	?
-Group:	Development/Libraries
+Group:		Libraries
 Source0:	%{name}-%{snap}.tar.gz
 # Source0-md5:	a0ce6ab4cf516386a8201cdfa1e2a680
-Patch0:	%{name}-Makefile.patch
+Patch0:		%{name}-Makefile.patch
 URL:		http://www.asteriskpbx.com/
-BuildRequires: zaptel-devel
+BuildRequires:	zaptel-devel
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
 ISDN PRI channel interface library.
 
+%description -l pl
+Biblioteka interfejsu do kana³ów PRI ISDN.
+
 %package devel
 Summary:	Header files and development documentation for libpri
 Summary(pl):	Pliki nag³ówkowe i dokumentacja do libpri
-Group:	Development/Libraries
-Requires:	%{name} = %{version}
+Group:		Development/Libraries
+Requires:	%{name} = %{version}-%{release}
 
 %description devel
 Header files and development documentation for libpri.
@@ -29,11 +33,15 @@ Pliki nag³ówkowe i dokumentacja do libpri.
 
 %package static
 Summary:	libpri static library
+Summary(pl):	Statyczna biblioteka libpri
 Group:		Development/Libraries
-Requires:	%{name}-devel = %{version}
+Requires:	%{name}-devel = %{version}-%{release}
 
 %description static
-bpri static library
+libpri static library.
+
+%description static -l pl
+Statyczna biblioteka libpri.
 
 %prep
 %setup -q -n %{name}
