@@ -2,12 +2,12 @@ Summary:	ISDN PRI channel interface library
 Summary(pl):	Biblioteka interfejsu do kana³ów PRI ISDN
 Name:		libpri
 Version:	0.1
-%define snap 20040407
+%define snap 20040830
 Release:	0.%{snap}.1
 License:	?
 Group:		Libraries
 Source0:	%{name}-%{snap}.tar.gz
-# Source0-md5:	a0ce6ab4cf516386a8201cdfa1e2a680
+# Source0-md5:	3a5535df07365bdd29650bc6c4137672
 Patch0:		%{name}-Makefile.patch
 URL:		http://www.asteriskpbx.com/
 BuildRequires:	zaptel-devel
