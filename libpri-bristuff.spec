@@ -5,7 +5,7 @@ Version:	1.0.0
 Release:	1
 License:	GPL
 Group:		Libraries
-Source0:	ftp://ftp.digium.com/pub/%{name}/%{name}-%{version}.tar.gz
+Source0:	ftp://ftp.digium.com/pub/libpri/%{name}-%{version}.tar.gz
 # Source0-md5:	814ebe7c24ccbe48f29814965d7f8f36
 Patch0:		%{name}-Makefile.patch
 URL:		http://www.asterisk.org/
@@ -43,7 +43,7 @@ libpri static library.
 Statyczna biblioteka libpri.
 
 %prep
-%setup -q -n %{name}-%{version}
+%setup -q
 %patch0 -p1
 
 %build
