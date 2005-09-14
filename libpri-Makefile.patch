@@ -1,7 +1,6 @@
-diff -burN libpri-1.0.0.orig/Makefile libpri-1.0.0/Makefile
---- libpri-1.0.0.orig/Makefile	2004-11-15 19:59:06.857292472 +0100
-+++ libpri-1.0.0/Makefile	2004-11-15 20:00:18.554392856 +0100
-@@ -62,13 +62,12 @@
+--- libpri-1.0.9/Makefile.orig	2005-05-11 03:37:29.000000000 +0000
++++ libpri-1.0.9/Makefile	2005-09-14 22:16:19.601647288 +0000
+@@ -62,14 +62,14 @@
  	@cvs update -d
  
  install: $(STATIC_LIBRARY) $(DYNAMIC_LIBRARY)
@@ -10,12 +9,15 @@ diff -burN libpri-1.0.0.orig/Makefile libpri-1.0.0/Makefile
  	mkdir -p $(INSTALL_PREFIX)/usr/include
  	install -m 644 libpri.h $(INSTALL_PREFIX)/usr/include
 -	install -m 755 $(DYNAMIC_LIBRARY) $(INSTALL_PREFIX)/usr/lib
+-	if [ -x /usr/sbin/sestatus ] && ( /usr/sbin/sestatus | grep "SELinux status:" | grep -q "enabled"); then  restorecon -v $(INSTALL_PREFIX)/$(INSTALL_BASE)/lib/$(DYNAMIC_LIBRARY); fi
 -	( cd $(INSTALL_PREFIX)/usr/lib ; ln -sf libpri.so.1 libpri.so )
 -	install -m 644 $(STATIC_LIBRARY) $(INSTALL_PREFIX)/usr/lib
 -	/sbin/ldconfig
 +	install -m 755 $(DYNAMIC_LIBRARY) $(INSTALL_PREFIX)$(LIBDIR)
++#	if [ -x /usr/sbin/sestatus ] && ( /usr/sbin/sestatus | grep "SELinux status:" | grep -q "enabled"); then  restorecon -v $(INSTALL_PREFIX)/$(INSTALL_BASE)/lib/$(DYNAMIC_LIBRARY); fi
 +	( cd $(INSTALL_PREFIX)$(LIBDIR) ; ln -sf libpri.so.1 libpri.so )
 +	install -m 644 $(STATIC_LIBRARY) $(INSTALL_PREFIX)$(LIBDIR)
++#	/sbin/ldconfig
  
  uninstall:
  	@echo "Removing Libpri"
