@@ -2,7 +2,7 @@ Summary:	ISDN PRI channel interface library
 Summary(pl):	Biblioteka interfejsu do kana³ów PRI ISDN
 Name:		libpri
 Version:	1.2.0
-Release:	1
+Release:	2
 License:	GPL
 Group:		Libraries
 Source0:	ftp://ftp.digium.com/pub/libpri/%{name}-%{version}.tar.gz
@@ -52,12 +52,13 @@ Statyczna biblioteka libpri.
 	CFLAGS="%{rpmcflags}"
 
 %install
+sed -i s,/lib,/%{_lib},g Makefile
 rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT{%{_bindir},%{_mandir}/man{1,3},%{_includedir},%{_libdir}}
 
 %{__make} install \
 	INSTALL_PREFIX=$RPM_BUILD_ROOT \
-	LIBDIR=%{_libdir}
+	LIBDIR=%{_lib}
 
 %clean
 rm -rf $RPM_BUILD_ROOT
