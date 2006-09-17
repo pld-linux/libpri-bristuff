@@ -1,12 +1,12 @@
 Summary:	ISDN PRI channel interface library
 Summary(pl):	Biblioteka interfejsu do kana³ów PRI ISDN
 Name:		libpri
-Version:	1.2.3
-Release:	1
+Version:	1.2.4
+Release:	0.20060917
 License:	GPL
 Group:		Libraries
-Source0:	ftp://ftp.digium.com/pub/libpri/%{name}-%{version}.tar.gz
-# Source0-md5:	f365d9ee29a7253d605729a6d07ebfff
+Source0:	libpri-%{version}.20060917.tar.gz
+# Source0-md5:	adc9d7c95a685b76b803ed21c89b9b23
 #Patch0:		%{name}-Makefile.patch
 URL:		http://www.asterisk.org/
 BuildRequires:	zaptel-devel
