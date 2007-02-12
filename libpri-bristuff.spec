@@ -1,5 +1,5 @@
 Summary:	ISDN PRI channel interface library
-Summary(pl):	Biblioteka interfejsu do kana丑w PRI ISDN
+Summary(pl.UTF-8):   Biblioteka interfejsu do kana艂贸w PRI ISDN
 Name:		libpri
 Version:	1.4.0
 Release:	1
@@ -15,31 +15,31 @@ BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 %description
 ISDN PRI channel interface library.
 
-%description -l pl
-Biblioteka interfejsu do kana丑w PRI ISDN.
+%description -l pl.UTF-8
+Biblioteka interfejsu do kana艂贸w PRI ISDN.
 
 %package devel
 Summary:	Header files and development documentation for libpri
-Summary(pl):	Pliki nag丑wkowe i dokumentacja do libpri
+Summary(pl.UTF-8):   Pliki nag艂贸wkowe i dokumentacja do libpri
 Group:		Development/Libraries
 Requires:	%{name} = %{version}-%{release}
 
 %description devel
 Header files and development documentation for libpri.
 
-%description devel -l pl
-Pliki nag丑wkowe i dokumentacja do libpri.
+%description devel -l pl.UTF-8
+Pliki nag艂贸wkowe i dokumentacja do libpri.
 
 %package static
 Summary:	libpri static library
-Summary(pl):	Statyczna biblioteka libpri
+Summary(pl.UTF-8):   Statyczna biblioteka libpri
 Group:		Development/Libraries
 Requires:	%{name}-devel = %{version}-%{release}
 
 %description static
 libpri static library.
 
-%description static -l pl
+%description static -l pl.UTF-8
 Statyczna biblioteka libpri.
 
 %prep
