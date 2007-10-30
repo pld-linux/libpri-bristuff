@@ -1,12 +1,13 @@
 Summary:	ISDN PRI channel interface library
 Summary(pl):	Biblioteka interfejsu do kana³ów PRI ISDN
 Name:		libpri
-Version:	1.2.4
+Version:	1.2.6
 Release:	1
 License:	GPL
 Group:		Libraries
-Source0:	ftp://ftp.digium.com/pub/libpri/%{name}-%{version}.tar.gz
-# Source0-md5:	2bc348d8363027736ccbf5998d85d317
+Source0:	http://downloads.digium.com/pub/libpri/%{name}-%{version}.tar.gz
+# Source0-md5:	d3a0ef933bdad14c2847b4967bc7058a
+Patch0:	%{name}-cflags.patch
 URL:		http://www.asterisk.org/
 BuildRequires:	zaptel-devel
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
@@ -43,15 +44,16 @@ Statyczna biblioteka libpri.
 
 %prep
 %setup -q
+%patch0 -p1
 
 %build
 %{__make} \
 	CC="%{__cc}" \
-	CFLAGS="%{rpmcflags}"
+	OPTFLAGS="%{rpmcflags}"
 
 %install
-sed -i s,/lib,/%{_lib},g Makefile
 rm -rf $RPM_BUILD_ROOT
+sed -i s,/lib,/%{_lib},g Makefile
 install -d $RPM_BUILD_ROOT{%{_bindir},%{_mandir}/man{1,3},%{_includedir},%{_libdir}}
 
 %{__make} install \
