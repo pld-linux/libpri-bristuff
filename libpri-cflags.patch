@@ -1,7 +1,7 @@
-diff -ur libpri-1.2.6-o/Makefile libpri-1.2.6/Makefile
---- libpri-1.2.6-o/Makefile	2007-08-27 13:20:23.000000000 -0600
-+++ libpri-1.2.6/Makefile	2007-10-30 12:14:50.000000000 -0600
-@@ -38,7 +38,7 @@
+diff -ur libpri-1.4.2-o/Makefile libpri-1.4.2/Makefile
+--- libpri-1.4.2-o/Makefile	2007-08-27 13:21:08.000000000 -0600
++++ libpri-1.4.2/Makefile	2007-10-30 15:04:26.000000000 -0600
+@@ -36,7 +36,7 @@
  DYNAMIC_LIBRARY=libpri.so.1.0
  STATIC_OBJS=copy_string.o pri.o q921.o prisched.o q931.o pri_facility.o
  DYNAMIC_OBJS=copy_string.lo pri.lo q921.lo prisched.lo q931.lo pri_facility.lo
@@ -10,3 +10,4 @@ diff -ur libpri-1.2.6-o/Makefile libpri-1.2.6/Makefile
  INSTALL_PREFIX=$(DESTDIR)
  INSTALL_BASE=/usr
  SOFLAGS = -Wl,-hlibpri.so.1.0
+Only in libpri-1.4.2: Makefile~
