@@ -1,4 +1,7 @@
-%bcond_with	bristuff
+#
+# Conditional build:
+%bcond_with	bristuff	# BRIstuff (Junghanns.NET BRI adapters) support
+#
 Summary:	ISDN PRI channel interface library
 Summary(pl.UTF-8):	Biblioteka interfejsu do kanałów PRI ISDN
 Name:		libpri
