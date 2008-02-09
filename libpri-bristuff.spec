@@ -1,3 +1,4 @@
+%bcond_with	bristuff
 Summary:	ISDN PRI channel interface library
 Summary(pl.UTF-8):	Biblioteka interfejsu do kanałów PRI ISDN
 Name:		libpri
@@ -7,6 +8,7 @@ License:	GPL
 Group:		Libraries
 Source0:	http://downloads.digium.com/pub/libpri/%{name}-%{version}.tar.gz
 # Source0-md5:	c5be91fc98f1638ba0365bf87f696cd1
+Patch0:		%{name}-bristuff.patch
 URL:		http://www.asterisk.org/
 BuildRequires:	zaptel-devel
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
@@ -43,6 +45,7 @@ Statyczna biblioteka libpri.
 
 %prep
 %setup -q
+%patch0 -p1
 
 %build
 %{__make} \
