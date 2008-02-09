@@ -1,7 +1,5 @@
-#
-# Conditional build:
+# TODO: create separate libpri-bristuff.spec with different include dir and soname (see debian)
 %bcond_with	bristuff	# BRIstuff (Junghanns.NET BRI adapters) support
-#
 Summary:	ISDN PRI channel interface library
 Summary(pl.UTF-8):	Biblioteka interfejsu do kanałów PRI ISDN
 Name:		libpri
@@ -14,6 +12,7 @@ Source0:	http://downloads.digium.com/pub/libpri/%{name}-%{version}.tar.gz
 Patch0:		%{name}-bristuff.patch
 URL:		http://www.asterisk.org/
 BuildRequires:	zaptel-devel
+%{?with_bristuff:Provides:	libpri-bristuff = %{version}-%{release}}
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -27,6 +26,7 @@ Summary:	Header files and development documentation for libpri
 Summary(pl.UTF-8):	Pliki nagłówkowe i dokumentacja do libpri
 Group:		Development/Libraries
 Requires:	%{name} = %{version}-%{release}
+%{?with_bristuff:Provides:	libpri-bristuff-devel = %{version}-%{release}}
 
 %description devel
 Header files and development documentation for libpri.
@@ -39,6 +39,7 @@ Summary:	libpri static library
 Summary(pl.UTF-8):	Statyczna biblioteka libpri
 Group:		Development/Libraries
 Requires:	%{name}-devel = %{version}-%{release}
+%{?with_bristuff:Provides:	libpri-bristuff-static = %{version}-%{release}}
 
 %description static
 libpri static library.
