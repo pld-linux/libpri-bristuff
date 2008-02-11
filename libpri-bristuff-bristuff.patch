@@ -358,8 +358,8 @@ diff -urN libpri-1.4.1.orig/Makefile libpri-1.4.1/Makefile
  DYNAMIC_LIBRARY=libpri.so.1.0
  STATIC_OBJS=copy_string.o pri.o q921.o prisched.o q931.o pri_facility.o
  DYNAMIC_OBJS=copy_string.lo pri.lo q921.lo prisched.lo q931.lo pri_facility.lo
--CFLAGS=-Wall -Werror -Wstrict-prototypes -Wmissing-prototypes -g -fPIC $(ALERTING) $(LIBPRI_COUNTERS)
-+CFLAGS=-Wall -Werror -Wstrict-prototypes -Wmissing-prototypes -g -fPIC $(ALERTING) $(LIBPRI_COUNTERS) $(LAYER2ALWAYSUP) $(FASTBUSYONBUSY) -DRELAX_TRB $(RELAXEDTIMERS)
+-CFLAGS+=-Wall -Werror -Wstrict-prototypes -Wmissing-prototypes -g -fPIC $(ALERTING) $(LIBPRI_COUNTERS)
++CFLAGS+=-Wall -Werror -Wstrict-prototypes -Wmissing-prototypes -g -fPIC $(ALERTING) $(LIBPRI_COUNTERS) $(LAYER2ALWAYSUP) $(FASTBUSYONBUSY) -DRELAX_TRB $(RELAXEDTIMERS)
  INSTALL_PREFIX=$(DESTDIR)
  INSTALL_BASE=/usr
  SOFLAGS = -Wl,-hlibpri.so.1.0
