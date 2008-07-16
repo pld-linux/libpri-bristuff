@@ -2,7 +2,7 @@ Summary:	ISDN PRI and BRI channel interface library
 Summary(pl.UTF-8):	Biblioteka interfejsu do kanałów PRI/BRI ISDN
 Name:		libpri-bristuff
 Version:	1.4.3
-Release:	1
+Release:	2
 License:	GPL
 Group:		Libraries
 Source0:	http://downloads.digium.com/pub/libpri/libpri-%{version}.tar.gz
