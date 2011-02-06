@@ -49,6 +49,7 @@ Statyczna biblioteka libpri-bristuff.
 %setup -q -n libpri-%{version}
 %patch0 -p1
 %patch1 -p1
+%{__sed} -i 's,/lib,/%{_lib},g' Makefile
 
 %build
 %{__make} \
@@ -57,7 +58,6 @@ Statyczna biblioteka libpri-bristuff.
 	OPTFLAGS="%{rpmcflags}"
 
 %install
-sed -i s,/lib,/%{_lib},g Makefile
 rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT{%{_bindir},%{_mandir}/man{1,3},%{_includedir},%{_libdir}}
 
