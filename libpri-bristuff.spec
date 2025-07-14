@@ -47,8 +47,8 @@ Statyczna biblioteka libpri-bristuff.
 
 %prep
 %setup -q -n libpri-%{version}
-%patch0 -p1
-%patch1 -p1
+%patch -P0 -p1
+%patch -P1 -p1
 %{__sed} -i 's,/lib,/%{_lib},g' Makefile
 
 %build
