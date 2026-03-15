@@ -1,0 +1,146 @@
+--- libpri-1.4.3/pri_facility.c.orig	2008-01-01 00:00:00.000000000 +0000
++++ libpri-1.4.3/pri_facility.c	2008-01-01 00:00:01.000000000 +0000
+@@ -755,7 +755,7 @@
+ 	switch(call->redirectingpres) {
+ 		case PRES_ALLOWED_USER_NUMBER_NOT_SCREENED:
+ 		case PRES_ALLOWED_USER_NUMBER_PASSED_SCREEN:
+-			if (call->redirectingnum && strlen(call->redirectingnum)) {
++			if (strlen(call->redirectingnum)) {
+ 				ASN1_ADD_SIMPLE(comp, (ASN1_CONTEXT_SPECIFIC | ASN1_CONSTRUCTOR | ASN1_TAG_0), buffer, i);
+ 				ASN1_PUSH(compstk, compsp, comp);
+ 					/* NPI of redirected number is not supported in the current design */
+@@ -799,7 +799,7 @@
+ 	switch(call->redirectingpres) {
+ 		case PRES_ALLOWED_USER_NUMBER_NOT_SCREENED:
+ 		case PRES_ALLOWED_USER_NUMBER_PASSED_SCREEN:
+-			if (call->redirectingnum && strlen(call->redirectingnum)) {
++			if (strlen(call->redirectingnum)) {
+ 				ASN1_ADD_SIMPLE(comp, (ASN1_CONTEXT_SPECIFIC | ASN1_CONSTRUCTOR | ASN1_TAG_0), buffer, i);
+ 				ASN1_PUSH(compstk, compsp, comp);
+ 				ASN1_ADD_SIMPLE(comp, (ASN1_CONTEXT_SPECIFIC | ASN1_CONSTRUCTOR | ASN1_TAG_1), buffer, i);
+@@ -1673,7 +1673,7 @@
+ 	int i = 0;
+ 	int operation_tag;
+ 	unsigned char *vdata = data;
+-	struct rose_component *comp = NULL, *invokeid = NULL, *operationid = NULL;
++	struct rose_component *comp = NULL, *invokeid, *operationid;
+ 	
+ 	do {
+ 		/* Invoke ID stuff */
+@@ -1690,6 +1690,8 @@
+ 		CHECK_COMPONENT(comp, ASN1_INTEGER, "Don't know what to do if second ROSE component is of type 0x%x\n");
+ #endif
+ 		operationid = comp;
++		(void)invokeid;
++		(void)operationid;
+ 		ASN1_GET_INTEGER(comp, operation_tag);
+ 		NEXT_COMPONENT(comp, i);
+ 
+--- libpri-1.4.3/q921.c.orig	2008-01-01 00:00:00.000000000 +0000
++++ libpri-1.4.3/q921.c	2008-01-01 00:00:01.000000000 +0000
+@@ -1113,7 +1113,7 @@
+ 		if (i->p_f) {
+ 			/* If the Poll/Final bit is set, immediate send the RR */
+ 			q921_rr(pri, 1, 0, i->h.tei);
+-		} else if (pri->busy) {
++		} else if (pri->busy[teio]) {
+ 			q921_rr(pri, 0, 0, i->h.tei);
+ 		}
+ 		/* Receive Q.931 data */
+@@ -1452,7 +1452,7 @@
+ 				} else {
+ 					if (pri->debug & PRI_DEBUG_Q921_DUMP)
+ 						pri_message(pri, "-- Unsolicited RR with P/F bit, responding\n");
+-						q921_rr(pri, 1, 0, h->h.tei);
++					q921_rr(pri, 1, 0, h->h.tei);
+ 				}
+ 				pri->solicitfbit[teio] = 0;
+ 			}
+@@ -1592,8 +1592,8 @@
+  					    case Q921_TEI_ID_VERIFY:
+  						if (pri->localtype != BRI_NETWORK_PTMP)
+  						    break;
+- 						    if (pri->debug & PRI_DEBUG_Q921_STATE)
+- 							pri_message(pri, "got TEI verify for TEI = %d\n",h->u.data[4] >> 1);
++ 						if (pri->debug & PRI_DEBUG_Q921_STATE)
++ 						    pri_message(pri, "got TEI verify for TEI = %d\n",h->u.data[4] >> 1);
+  					    break;
+  					    case Q921_TEI_ID_ASSIGNED:
+  						if (pri->localtype != BRI_CPE_PTMP)
+@@ -1656,15 +1656,15 @@
+  					    case Q921_TEI_ID_CHK_REQ:
+  						if (pri->localtype != BRI_CPE_PTMP)
+  						    break;
+- 						    if ((((h->u.data[4] >> 1) == Q921_TEI_GROUP) || ((h->u.data[4] >> 1) == 0) || ((h->u.data[4] >> 1) == pri->tei)) && (pri->tei > 0)) {
+- 							pri_message(pri, "received TEI check request for TEI = %d\n",h->u.data[4] >> 1);
+- 							q921_send_teichkresp(pri, pri->tei);
+- 						    }
++ 						if ((((h->u.data[4] >> 1) == Q921_TEI_GROUP) || ((h->u.data[4] >> 1) == 0) || ((h->u.data[4] >> 1) == pri->tei)) && (pri->tei > 0)) {
++ 						    pri_message(pri, "received TEI check request for TEI = %d\n",h->u.data[4] >> 1);
++ 						    q921_send_teichkresp(pri, pri->tei);
++ 						}
+  					    break;
+  					    case Q921_TEI_ID_CHK_RES:
+  						if (pri->localtype != BRI_NETWORK_PTMP)
+  						    break;
+-						    teio = (h->u.data[4] >> 1) - Q921_TEI_BASE;
++						teio = (h->u.data[4] >> 1) - Q921_TEI_BASE;
+ 						    if ((teio < 0) || (teio >= Q921_MAX_TEIS)) break;
+  						    if (pri->q921_tei_check[teio] == 1) {
+  						        pri->q921_tei_check_ri[teio] = (h->u.data[1] << 8) + h->u.data[2];
+--- libpri-1.4.3/q931.c.orig	2008-01-01 00:00:00.000000000 +0000
++++ libpri-1.4.3/q931.c	2008-01-01 00:00:01.000000000 +0000
+@@ -949,7 +949,7 @@
+ {
+ 	if (order > 1)
+ 		return 0;
+-	if (call->redirectingnum && strlen(call->redirectingnum)) {
++	if (strlen(call->redirectingnum)) {
+ 		ie->data[0] = call->redirectingplan;
+ 		ie->data[1] = call->redirectingpres;
+ 		ie->data[2] = (call->redirectingreason & 0x0f) | 0x80;
+@@ -1448,7 +1448,7 @@
+ 			}
+ 		} while (0);
+ 	}
+-	if (/*(pri->switchtype == PRI_SWITCH_EUROISDN_E1) &&*/ call->redirectingnum && strlen(call->redirectingnum)) {
++	if (/*(pri->switchtype == PRI_SWITCH_EUROISDN_E1) &&*/ strlen(call->redirectingnum)) {
+ 		if (!(first_i = i)) {
+ 			/* Add protocol information header */
+ 			ie->data[i++] = 0x80 | Q932_PROTOCOL_ROSE;
+@@ -1483,7 +1483,7 @@
+ 		switch(call->redirectingpres) {
+ 		case PRES_ALLOWED_USER_NUMBER_NOT_SCREENED:
+ 		case PRES_ALLOWED_USER_NUMBER_PASSED_SCREEN:
+-			if (call->redirectingnum && strlen(call->redirectingnum)) {
++			if (strlen(call->redirectingnum)) {
+ 				ASN1_ADD_SIMPLE(comp, 0xA0, ie->data, i);
+ 				ASN1_PUSH(compstk, compsp, comp);
+
+@@ -1532,7 +1532,7 @@
+ 		switch(call->redirectingpres) {
+ 		case PRES_ALLOWED_USER_NUMBER_NOT_SCREENED:
+ 		case PRES_ALLOWED_USER_NUMBER_PASSED_SCREEN:
+-			if (call->redirectingnum && strlen(call->redirectingnum)) {
++			if (strlen(call->redirectingnum)) {
+ 				ASN1_ADD_SIMPLE(comp, 0xA0, ie->data, i);
+ 				ASN1_PUSH(compstk, compsp, comp);
+
+@@ -1641,7 +1641,7 @@
+ 	if (ie->len < 3)
+ 		return -1;
+ 	
+-	while ((i+1 < ie->len) && (&ie->data[i])) {
++	while (i+1 < ie->len) {
+ 		comp = (struct rose_component*)&ie->data[i];
+ 		if (comp->type) {
+ 			if (protocol == Q932_PROTOCOL_EXTENSIONS) {
+@@ -2622,7 +2622,7 @@
+ 	if (pri->debug & PRI_DEBUG_Q921_STATE)
+ 		pri_message(pri, "-- Making new q921 call for cref %d tei %d\n", c->cr, tei);
+ 	cur = malloc(sizeof(struct q921_call));
+-	memset(cur, 0, sizeof(cur));
++	memset(cur, 0, sizeof(*cur));
+ 	cur->tei = tei;
+ 	cur->proc = 0;
+ 	cur->channel = -1;

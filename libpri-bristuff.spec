@@ -2,7 +2,7 @@ Summary:	ISDN PRI and BRI channel interface library
 Summary(pl.UTF-8):	Biblioteka interfejsu do kanałów PRI/BRI ISDN
 Name:		libpri-bristuff
 Version:	1.4.3
-Release:	2
+Release:	3
 License:	GPL
 Group:		Libraries
 Source0:	http://downloads.digium.com/pub/libpri/libpri-%{version}.tar.gz
@@ -11,8 +11,8 @@ Source0:	http://downloads.digium.com/pub/libpri/libpri-%{version}.tar.gz
 Patch0:		%{name}-libname.patch
 # http://svn.debian.org/wsvn/pkg-voip/libpri/trunk/debian/patches
 Patch1:		%{name}-bristuff.patch
+Patch2:		%{name}-gcc-fixes.patch
 URL:		http://www.asterisk.org/
-BuildRequires:	zaptel-devel
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -49,6 +49,7 @@ Statyczna biblioteka libpri-bristuff.
 %setup -q -n libpri-%{version}
 %patch -P0 -p1
 %patch -P1 -p1
+%patch -P2 -p1
 %{__sed} -i 's,/lib,/%{_lib},g' Makefile
 
 %build
